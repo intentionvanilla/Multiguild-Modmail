@@ -52,7 +52,7 @@ module.exports = client => {
                                         .setFooter(`ID: ${serverauthor.id}`, serverauthor.displayAvatarURL({dynamic: true}))
                                         .setColor("RED")
                                         .setTitle("❌ Ongeldige Gebruik")
-                                        .setDescription(`Gebruik: \`${config.prefix}setup <CategoryId> [TICKETSOPENINGBERICHT]\`\n**CategoryId** is de ID van het categorie waar de tickets gaan worden aangemaakt.\n**TICKETOPENINGMESSAGE**... is the Message which should be sent into the DMS once the TICKET/MODMAIL got opened!!`)
+                                        .setDescription(`Gebruik: \`${config.prefix}setup <CategoryId> [TICKETSOPENINGBERICHT]\`\n**CategoryId** is de ID van het categorie waar de tickets aangemaakt gaan worden.\n**TICKETSOPENINGBERICHT** is het bericht wat verzonden wordt naar degene die een de bot een DM stuurt..`)
                                 ]
                             }).catch(console.error)
                         }
@@ -65,15 +65,15 @@ module.exports = client => {
                                         .setTimestamp()
                                         .setFooter(`ID: ${serverauthor.id}`, serverauthor.displayAvatarURL({dynamic: true}))
                                         .setColor("RED")
-                                        .setTitle("❌ Invalid Category ID!")
-                                        .setDescription(`${args[0]} is not a Category ID!`.substr(0, 2048))
+                                        .setTitle("❌ Ongeldige Categorie")
+                                        .setDescription(`${args[0]} is geen geldige categorieID.`.substr(0, 2048))
                                 ]
                             }).catch(console.error)
                         }
                         client.modmailDb.set(message.guild.id, {
                             enabled: true,
                             category: category.id,
-                            message: args[1] ? args.slice(1).join(" ").substr(0, 2000) : "Start typing what you need and get Help!"
+                            message: args[1] ? args.slice(1).join(" ").substr(0, 2000) : "Welkom!\nVertel alvast waarmee we je kunnen helpen."
                         })
                         return message.reply({
                             embeds: [
@@ -82,7 +82,8 @@ module.exports = client => {
                                     .setTimestamp()
                                     .setFooter(`ID: ${serverauthor.id}`, serverauthor.displayAvatarURL({dynamic: true}))
                                     .setColor("GREEN")
-                                    .setTitle("✅ Successfully Enabled and configurated the Setup!")
+                                    .setTitle("✅ Ingesteld")
+                                    .setDescription("Het modmail systeem is succesvol ingeschakeld en ingesteld.")
                                 ]
                         }).catch(console.error)
                     } 
@@ -95,7 +96,8 @@ module.exports = client => {
                                         .setTimestamp()
                                         .setFooter(`ID: ${serverauthor.id}`, serverauthor.displayAvatarURL({dynamic: true}))
                                         .setColor("RED")
-                                        .setTitle("❌ Only Admins are allowed to execute this Command!")
+                                        .setTitle("❌ Geen Permissies")
+                                        .setDescription("Alleen beheerders hebben toegang tot deze commando.")
                                     ]
                             }).catch(console.error)
                         }
@@ -107,7 +109,8 @@ module.exports = client => {
                                         .setTimestamp()
                                         .setFooter(`ID: ${serverauthor.id}`, serverauthor.displayAvatarURL({dynamic: true}))
                                         .setColor("RED")
-                                        .setTitle("❌ You werend setup before!")
+                                        .setTitle("❌ Geen Data")
+                                        .setDescription("Er is geen data gevonden voor deze server.")
                                     ]
                             }).catch(console.error)
                         }
