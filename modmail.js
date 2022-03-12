@@ -11,7 +11,7 @@ module.exports = client => {
             client.modmailDb.ensure(message.guild.id, {
                 enabled: false,
                 category: null,
-                message: "Start typing what you need and get Help!"
+                message: "Welkom!\nVertel alvast waarmee we je kunnen helpen."
             })
             let data = client.modmailDb.get(message.guild.id)
             client.settings.ensure(message.guild.id, {
@@ -25,16 +25,11 @@ module.exports = client => {
                 let cmd = args.shift()?.toLowerCase(); //PinG --> ping;
                 if(cmd.length == 0 && matchedPrefix.includes(client.user.id)){
                     return message.reply({embeds: [
-                        new Discord.MessageEmbed().setColor("BLURPLE").setTitle(`:white_check_mark: **My Prefix is: \`${prefix}\`**`)
+                        new Discord.MessageEmbed().setColor("BLURPLE").setDescription(`Mijn prefix is \`${prefix}\``)
                     ]}).catch(console.error);
                 }
                 if(cmd && cmd.length > 0){
-                    if(cmd == "invite" || cmd == "add"){
-                        message.reply({
-                            embeds: [new Discord.MessageEmbed().setColor("BLURPLE").setTitle(`:white_check_mark: **Thanks for inviting me**`)
-                            .setDescription(`[**Click here to invite me!**](https://discord.com/api/oauth2/authorize?client_id=${client.user.id}&permissions=8&scope=bot)`)
-                        ]})
-                    } else if(cmd == "setup"){
+                    if(cmd == "setup"){
                         if(!message.member.permissions.has(Discord.Permissions.FLAGS.ADMINISTRATOR)) {
                             return message.reply({
                                 embeds: [
@@ -43,7 +38,8 @@ module.exports = client => {
                                         .setTimestamp()
                                         .setFooter(`ID: ${serverauthor.id}`, serverauthor.displayAvatarURL({dynamic: true}))
                                         .setColor("RED")
-                                        .setTitle("❌ Only Admins are allowed to execute this Command!")
+                                        .setTitle("❌ Geen Permissies")
+                                        .setDescription("Alleen beheerders hebben toegang tot deze commando.")
                                     ]
                             }).catch(console.error)
                         }
@@ -55,8 +51,8 @@ module.exports = client => {
                                         .setTimestamp()
                                         .setFooter(`ID: ${serverauthor.id}`, serverauthor.displayAvatarURL({dynamic: true}))
                                         .setColor("RED")
-                                        .setTitle("❌ Invalid Usage!")
-                                        .setDescription(`Usage: \`${config.prefix}setup <CategoryId> [TICKETOPENING INFORMATIONMESSAGE]\`\n**CategoryId**... is the ID of the Category where the Support Channels should go!\n**TICKETOPENINGMESSAGE**... is the Message which should be sent into the DMS once the TICKET/MODMAIL got opened!!`)
+                                        .setTitle("❌ Ongeldige Gebruik")
+                                        .setDescription(`Gebruik: \`${config.prefix}setup <CategoryId> [TICKETSOPENINGBERICHT]\`\n**CategoryId** is de ID van het categorie waar de tickets gaan worden aangemaakt.\n**TICKETOPENINGMESSAGE**... is the Message which should be sent into the DMS once the TICKET/MODMAIL got opened!!`)
                                 ]
                             }).catch(console.error)
                         }
