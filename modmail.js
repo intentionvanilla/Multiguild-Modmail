@@ -122,7 +122,8 @@ module.exports = client => {
                                     .setTimestamp()
                                     .setFooter(`ID: ${serverauthor.id}`, serverauthor.displayAvatarURL({dynamic: true}))
                                     .setColor("GREEN")
-                                    .setTitle("✅ Successfully Deleted the Setup!")
+                                    .setTitle("✅ Data Verwijderd")
+                                    .setDescription("Data is succesvol verwijderd.")
                                 ]
                         }).catch(console.error)
                     }
@@ -137,8 +138,8 @@ module.exports = client => {
                                         .setTimestamp()
                                         .setFooter(`ID: ${serverauthor.id}`, serverauthor.displayAvatarURL({dynamic: true}))
                                         .setColor("GREEN")
-                                        .setTitle("✅ Force Closed this Ticket")
-                                        .setDescription(`U CAN NOW DELETE IT IF YOU WANT!`)
+                                        .setTitle("✅ Ticket Gesloten")
+                                        .setDescription(`Ticket kan verwijderd worden.`)
                                     ]
                             }).catch(console.error)
                         } else {
@@ -149,7 +150,8 @@ module.exports = client => {
                                         .setTimestamp()
                                         .setFooter(`ID: ${serverauthor.id}`, serverauthor.displayAvatarURL({dynamic: true}))
                                         .setColor("RED")
-                                        .setTitle("❌ This Channel is not a Ticket!")
+                                        .setTitle("❌ Geen Ticket")
+                                        .setDescription("Dit kanaal is geen ticket.")
                                     ]
                             }).catch(console.error)
                         }
@@ -165,8 +167,8 @@ module.exports = client => {
                                             .setTimestamp()
                                             .setFooter(`ID: ${serverauthor.id}`, serverauthor.displayAvatarURL({dynamic: true}))
                                             .setColor("RED")
-                                            .setTitle("❌ This Channel is Closed / the user left!")
-                                            .setDescription(`Close the Ticket with: \`${config.prefix}forceclose\`\nAfter that, you can delete the Channel!`)
+                                            .setTitle("❌ Fout")
+                                            .setDescription(`Dit kanaal is al gesloten of het gebruiker heeft de server verlaten. \nSluit deze ticket met \`${config.prefix}forceclose\`\nDaarna kan je dit kanaal verwijderen.`)
                                         ]
                                 }).catch(console.error);
                             let author = message.guild.members.cache.get(authorId);
@@ -180,8 +182,8 @@ module.exports = client => {
                                             .setTimestamp()
                                             .setFooter(`ID: ${serverauthor.id}`, serverauthor.displayAvatarURL({dynamic: true}))
                                             .setColor("RED")
-                                            .setTitle("❌ The User left the Server")
-                                            .setDescription(`Close the Ticket with: \`${config.prefix}close\``)
+                                            .setTitle("❌ Gebruiker niet gevonden")
+                                            .setDescription(`Het gebruiker heeft de server verlaten.\nSluit deze ticket doormiddel van \`${config.prefix}close\``)
                                         ]
                                 }).catch(console.error)
                             })
@@ -193,8 +195,8 @@ module.exports = client => {
                                             .setTimestamp()
                                             .setFooter(`ID: ${serverauthor.id}`, serverauthor.displayAvatarURL({dynamic: true}))
                                             .setColor("RED")
-                                            .setTitle("❌ The User left the Server")
-                                            .setDescription(`Close the Ticket with: \`${config.prefix}forceclose\``)
+                                            .setTitle("❌ Gebruiker niet gevonden")
+                                            .setDescription(`Het gebruiker heeft de server verlaten.\nSluit deze ticket doormiddel van \`${config.prefix}close\``)
                                         ]
                                 }).catch(console.error)
                             }
@@ -238,7 +240,8 @@ module.exports = client => {
                                         .setTimestamp()
                                         .setFooter(`ID: ${serverauthor.id}`, serverauthor.displayAvatarURL({dynamic: true}))
                                         .setColor("GREEN")
-                                        .setTitle("✅ Supporter Closed the Ticket")
+                                        .setTitle("✅ Ticket Gesloten")
+                                        .setDescription("Een medewerker heeft deze ticket gesloten.")
                                     ]
                             }).catch(console.error)
                             await message.author.send({
@@ -249,7 +252,8 @@ module.exports = client => {
                                         .setTimestamp()
                                         .setFooter(`ID: ${serverauthor.id}`, serverauthor.displayAvatarURL({dynamic: true}))
                                         .setColor("GREEN")
-                                        .setTitle("✅ Supporter Closed the Ticket")
+                                        .setTitle("✅ Ticket Gesloten")
+                                        .setDescription("Een medewerker heeft deze ticket gesloten.")
                                     ]
                             }).catch(console.error)
                             await message.reply({
