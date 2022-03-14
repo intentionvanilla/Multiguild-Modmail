@@ -264,8 +264,8 @@ module.exports = client => {
                                         .setTimestamp()
                                         .setFooter(`ID: ${serverauthor.id}`, serverauthor.displayAvatarURL({dynamic: true}))
                                         .setColor("GREEN")
-                                        .setTitle("✅ Supporter Closed the Ticket")
-                                        .setDescription(`U CAN NOW DELETE IT IF YOU WANT!`)
+                                        .setTitle("✅ Ticket Gesloten")
+                                        .setDescription("Dit kanaal kan nu verwijderd worden.")
                                     ]
                             }).catch(console.error)
                             try{ fs.unlinkSync(`${process.cwd()}/${message.channel.name}.html`)}catch(e){ console.log(e) }
@@ -277,7 +277,8 @@ module.exports = client => {
                                         .setTimestamp()
                                         .setFooter(`ID: ${serverauthor.id}`, serverauthor.displayAvatarURL({dynamic: true}))
                                         .setColor("RED")
-                                        .setTitle("❌ This Channel is not a Ticket!")
+                                        .setTitle("❌ Geen Ticket")
+                                        .setDescription("Dit kanaal is geen ticket.")
                                     ]
                             }).catch(console.error)
                         }
@@ -287,36 +288,35 @@ module.exports = client => {
                         embeds.push(new Discord.MessageEmbed()
                             .setColor("BLURPLE")
                             .setTitle(`This is my Help Information!`)
-                            .setDescription(`Hello I am ${guild.me.user.username} and i am a easy 2 setup and use Modmail-bot!\n> A Modmail Bot is a Bot similar to a Ticket Bot which allows you to DM with The Ticket User instead of Using a Ticket! It's easier for them and i have an advance Ticket Logger too!\n\n**These are my Commands:**\n\n\`Tomato#6966\` Coded me and here is the [Youtube Video](https://youtu.be/4oZb8-f1qYk) how he made me! [Github](https://github.com/Tomato6966/Multiguild-Modmail)`)
-                            .addField("<:Discord:787321652345438228> **Support Server**", `> Join my [Support Server](https://discord.gg/milrato)`)
+                            .addField("**Support Server**", `> Join mijn [Support Server](dsc.gg/cbs)`)
                             .setThumbnail(guild.me.user.displayAvatarURL())
                             .setAuthor(guild.name, guild.iconURL({dynamic: true})))
                         embeds.push(new Discord.MessageEmbed()
                             .setColor("GREEN")
-                            .setTitle(`💯 My Utility Commands!`)
+                            .setTitle("Nuttige Commando's")
                             .setThumbnail(guild.me.user.displayAvatarURL())
                             .addFields([
-                                {name: "**ping**", value: `> *Shows the Ping of me.*`, inline: true},
-                                {name: "**help**", value: `> *Gives you help!*`, inline: true},
-                                {name: "**invite**", value: `> *Gives you an Invite link!*`, inline: true},
+                                {name: "**ping**", value: `> *Laat de ping zien.*`, inline: true},
+                                {name: "**help**", value: `> *Laat dit bericht zien.*`, inline: true},
+                                {name: "**invite**", value: `> *Geeft je een invite link.*`, inline: true},
                             ]))
                         embeds.push(new Discord.MessageEmbed()
                             .setColor("RED")
-                            .setTitle(`🚫 The Administration Commands!`)
+                            .setTitle(`Administratieve Commando's`)
                             .setThumbnail(guild.me.user.displayAvatarURL())
                             .addFields([
-                                {name: "**setup**", value: `> *Creates the Setup for your Modmail Ticket*`, inline: true},
-                                {name: "**deletesetup**", value: `> *Delets the Setup of it*`, inline: true},
-                                {name: "**prefix**", value: `> *Changes the Prefix of me!*`, inline: true},
+                                {name: "**setup**", value: `> *Stelt de modmail in.*`, inline: true},
+                                {name: "**deletesetup**", value: `> *Verwijderd alle data.*`, inline: true},
+                                {name: "**prefix**", value: `> *Veranderd de prefix.*`, inline: true},
                                 {name: "\u200b", value: `\u200b`, inline: false},
-                                {name: "**close**", value: `> *Closes the Ticket (or use my Button)*`, inline: true},
-                                {name: "**forceclose**", value: `> *Force Closes it so that you can delete the Channel and the User can create new one(s)*`, inline: true},
+                                {name: "**close**", value: `> *Sluit een ticket.*`, inline: true},
+                                {name: "**forceclose**", value: `> *Sluit het zodat je het kanaal kunt verwijderen en het gebruiker een nieuwe ticket kan maken*`, inline: true},
                             ])
                             .setFooter(guild.name, guild.iconURL({dynamic: true})))
                         message.reply({embeds})
                     } else if(cmd == "ping"){
                         message.reply({embeds: [
-                            new Discord.MessageEmbed().setColor("BLURPLE").setTitle(`:white_check_mark: **Pinging the API...**`)
+                            new Discord.MessageEmbed().setColor("BLURPLE").setTitle(`Even geduld alstublieft`).setDescription("De API pingen...")
                         ]}).then((msg)=>{
                             let botping = (Date.now() - msg.createdTimestamp) - (2 * client.ws.ping);
                             if(botping < 0) botping = 10;
@@ -327,20 +327,20 @@ module.exports = client => {
                     } else if(cmd == "prefix"){
                         if(!message.member.permissions.has(Discord.Permissions.FLAGS.MANAGE_GUILD)){
                             return message.reply({embeds: [
-                                new Discord.MessageEmbed().setColor("RED").setTitle(`:x: **You are not allowed to run this Command**`)
+                                new Discord.MessageEmbed().setColor("RED").setTitle(`Geen Permissies`).setDescription("Je hebt geen recht om deze commando uit te voeren.")
                             ]}).catch(console.error);
                         }
                         
                         if(!args[0]){
                             return message.reply({embeds: [
-                                new Discord.MessageEmbed().setColor("RED").setTitle(`:x: **You need to tell me what the new prefix should be!**`)
+                                new Discord.MessageEmbed().setColor("RED").setTitle(`Geen Argumenten`).setDescription("Geef je nieuwe prefix mee.")
                             ]}).catch(console.error);
                         }
                         //change the prefix settings
                         client.settings.set(message.guild.id, args[0], "prefix");
                         //Send success message
                         return message.reply({embeds: [
-                            new Discord.MessageEmbed().setColor("BLURPLE").setTitle(`:white_check_mark: **Successfully changed the Prefix to: \`${args[0]}\`**`)
+                            new Discord.MessageEmbed().setColor("BLURPLE").setTitle(`:white_check_mark: Prefix Veranderd`).setDescription("Prefix is succesvol veranderd naar \`${args[0]}\`.")
                         ]}).catch(console.error);
                     }
                 }
@@ -355,8 +355,8 @@ module.exports = client => {
                                 .setTimestamp()
                                 .setFooter(`ID: ${serverauthor.id}`, serverauthor.displayAvatarURL({dynamic: true}))
                                 .setColor("RED")
-                                .setTitle("❌ This Channel is Closed / the user left!")
-                                .setDescription(`Close the Ticket with: \`${config.prefix}forceclose\`\nAfter that, you can delete the Channel!`)
+                                .setTitle("❌ Geen Gebruiker Gevonden")
+                                .setDescription(`Er is geen gebruiker gevonden die verbonden staat met dit kanaal. Sluit de ticket doormiddel van \`${config.prefix}forceclose\`\nDaarna kan je het kanaal verwijderen.`)
                             ]
                     }).catch(console.error);
                 let author = message.guild.members.cache.get(authorId);
@@ -370,8 +370,8 @@ module.exports = client => {
                                 .setTimestamp()
                                 .setFooter(`ID: ${serverauthor.id}`, serverauthor.displayAvatarURL({dynamic: true}))
                                 .setColor("RED")
-                                .setTitle("❌ The User left the Server")
-                                .setDescription(`Close the Ticket with: \`${config.prefix}close\``)
+                                .setTitle("❌ Geen Gebruker Gevonden")
+                                .setDescription(`Het gebruiker heeft de server verlaten. Sluit deze ticket met \`${config.prefix}close\``)
                             ]
                     }).catch(console.error)
                 })
@@ -383,8 +383,8 @@ module.exports = client => {
                                 .setTimestamp()
                                 .setFooter(`ID: ${serverauthor.id}`, serverauthor.displayAvatarURL({dynamic: true}))
                                 .setColor("RED")
-                                .setTitle("❌ The User left the Server")
-                                .setDescription(`Close the Ticket with: \`${config.prefix}close\``)
+                                .setTitle("❌ Geen Gebruker Gevonden")
+                                .setDescription(`Het gebruiker heeft de server verlaten. Sluit deze ticket met \`${config.prefix}close\``)
                             ]
                     }).catch(console.error)
                 }
@@ -402,9 +402,9 @@ module.exports = client => {
                 .setTimestamp()
                 .setFooter(`ID: ${serverauthor.id}`, serverauthor.displayAvatarURL({dynamic: true}))
                 .setColor("GREEN")
-                .setTitle("📨 Sent a new Message")
+                .setTitle("Nieuwe Bericht")
                 .setDescription(`${message.content}`.substr(0, 2048))
-                .addField(`Highest Role:`, `${message.member.roles.highest.name} | \`${message.member.roles.highest.id}\``);
+                .addField(`Hoogste Rol:`, `${message.member.roles.highest.name} | \`${message.member.roles.highest.id}\``);
                 if(attachment.length > 0){
                     console.log(attachment)
                     embed.setImage('attachment://unknown.png');
@@ -422,13 +422,11 @@ module.exports = client => {
                             .setTimestamp()
                             .setFooter(`ID: ${serverauthor.id}`, serverauthor.displayAvatarURL({dynamic: true}))
                             .setColor("RED")
-                            .setTitle("❌ Failed to send a Message to the Channel")
+                            .setTitle("❌ Geen bericht kunnen verzenden")
                             .setDescription(`\`\`\`${error.message ? String(error.message).substr(0, 2000) : String(e).substr(0, 2000)}\`\`\``)
                            ]
                     }).catch(console.error)
                 })
-                .then(success=>{
-                    message.react("📨").catch(console.error)
                     message.react("✅").catch(console.error)
                 });
             }
@@ -438,11 +436,11 @@ module.exports = client => {
 
     client.on("ready", () => {
         client.user.setActivity({
-            name: "Dm me for help | m!help | " + client.guilds.cache.size + " Guilds", type: "PLAYING", url: "https://twitch.tv/#"
+            name: `Dm voor hulp | ${config.prefix}help | ` + client.guilds.cache.size + " Servers", type: "WATCHING"
         })
         setInterval(() => {
             client.user.setActivity({
-                name: "Dm me for help | m!help | " + client.guilds.cache.size + " Guilds", type: "PLAYING", url: "https://twitch.tv/#"
+            name: `Dm voor hulp | ${config.prefix}help | ` + client.guilds.cache.size + " Servers", type: "WATCHING"
             })
         }, (1000 * 60 * 5));
     })
@@ -465,6 +463,14 @@ module.exports = client => {
                 }
 
                 if(guildsin.length == 0){
+                    
+                    const row = new Discord.MessageActionRow().addComponents(
+          new Discord.MessageButton()
+          .setLabel("Invite")
+          .setStyle("LINK")
+          .setURL(`https://discord.com/api/oauth2/authorize?client_id=${client.user.id}&permissions=8&scope=bot`)
+          .setEmoji("🔗")
+     );
                     return message.reply({
                         embeds: [
                             new Discord.MessageEmbed()
@@ -472,9 +478,10 @@ module.exports = client => {
                                 .setTimestamp()
                                 .setFooter(`ID: ${dmauthor.id}`, dmauthor.displayAvatarURL({dynamic: true}))
                                 .setColor("RED")
-                                .setTitle("❌ You are not sharing any Guilds with me!")
-                                .setDescription(`[**Click here to invite me!**](https://discord.com/api/oauth2/authorize?client_id=${client.user.id}&permissions=8&scope=bot)`)
-                        ]
+                                .setTitle("❌ Geen server gevonden")
+                                .setDescription(`Je deelt geen server met mij. \nKlik hieronder om mij uit te nodigen naar je server.`)
+                        ],
+                        components: [row]
                     }).catch(console.error)
                 }
                 else if(guildsin.length == 1){
@@ -503,8 +510,8 @@ module.exports = client => {
                                     .setTimestamp()
                                     .setFooter(`ID: ${dmauthor.id}`, dmauthor.displayAvatarURL({dynamic: true}))
                                     .setColor("RED")
-                                    .setTitle("❌ Could not find the Guild under this ID!! (IF YOU TRY TO SEND ONE)")
-                                    .setDescription(`[**Click here to invite me!**](https://discord.com/api/oauth2/authorize?client_id=${client.user.id}&permissions=8&scope=bot)\n\n**Did you add a right ID?** <Check out my Example ID! \`${guildsin[0]}\`>`)
+                                    .setTitle("❌ Geen server gevonden")
+                                    .setDescription(`Je hebt een ongeldige server ID opgegeven. \n\n**Voorbeeld ID:** \`${guildsin[0]}\`>`)
                             ]
                         }).catch(console.error)
                         
@@ -514,9 +521,9 @@ module.exports = client => {
                         .setTimestamp()
                         .setFooter(`ID: ${dmauthor.id}`, dmauthor.displayAvatarURL({dynamic: true}))
                         .setColor("BLURPLE")
-                        .setTitle("✅ All Guilds we are in!")
+                        .setTitle("✅ Alle servers waar ik in zit")
                         .setDescription(String(guildsin.map(id => `${client.guilds.cache.get(id) ? `**${client.guilds.cache.get(id).name}** (\`${id}\`)`: `\`${id}\``}`).join("\n")).substr(0, 2048))
-                        .setFooter("Information: If your Guild is not showing, then just send the ID of the Guild you want to get help with!")
+                        .setFooter("Informatie: Als je server niet wordt weergegeven, stuur dan gewoon de ID van de server waar je hulp wilt krijgen.")
                     message.reply({
                         embeds: [
                             embed,
@@ -525,8 +532,8 @@ module.exports = client => {
                                 .setTimestamp()
                                 .setFooter(`ID: ${dmauthor.id}`, dmauthor.displayAvatarURL({dynamic: true}))
                                 .setColor("GREEN")
-                                .setTitle("👍 Select which Guild you wanna ask for Support!")
-                                .setDescription(`**Please send the ID of the GUILD you wanna get Support with!**\n\n**Example:**\n> \`${guildsin[0]}\``)
+                                .setTitle("👍 Kies een server")
+                                .setDescription(`Verzend de ID van de server waar je hulp wilt krijgen.\n\n**Voorbeeld:**\n> \`${guildsin[0]}\``)
                         ]
                     });
                 }
@@ -542,7 +549,8 @@ module.exports = client => {
                                 .setTimestamp()
                                 .setFooter(`ID: ${dmauthor.id}`, dmauthor.displayAvatarURL({dynamic: true}))
                                 .setColor("RED")
-                                .setTitle("❌ Unable to find the Support GUILD, try again!")
+                                .setTitle("❌ Geen server gevonden")
+                                .setDescription("Ik heb geen server kunnen vinden, probeer het later opnieuw.")
                             ]
                     }).catch(console.error)
                 }
@@ -555,11 +563,12 @@ module.exports = client => {
                                 .setTimestamp()
                                 .setFooter(`ID: ${dmauthor.id}`, dmauthor.displayAvatarURL({dynamic: true}))
                                 .setColor("RED")
-                                .setTitle("❌ Unable to find the Support Channel, try again!")
+                                .setTitle("❌ Geen kanaal gevonden")
+                                .setDescription("Ik heb geen kanaal kunnen vinden, probeer het later opnieuw.")
                             ],
                             components: [
                                 new Discord.MessageActionRow().addComponents(
-                                    new Discord.MessageButton().setStyle("SECONDARY").setLabel("FORCE CLOSE IT").setCustomId("force_modmail_close").setEmoji("❎")
+                                    new Discord.MessageButton().setStyle("SECONDARY").setLabel("Force Close").setCustomId("force_modmail_close").setEmoji("❎")
                                 )
                             ]
                     }).catch(console.error)
