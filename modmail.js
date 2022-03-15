@@ -605,13 +605,12 @@ module.exports = client => {
                             .setTimestamp()
                             .setFooter(`ID: ${dmauthor.id}`, dmauthor.displayAvatarURL({dynamic: true}))
                             .setColor("RED")
-                            .setTitle("❌ Failed to send a Message to the Channel")
+                            .setTitle("❌ Geen bericht kunnen verzenden")
                             .setDescription(`\`\`\`${error.message ? String(error.message).substr(0, 2000) : String(e).substr(0, 2000)}\`\`\``)
                            ]
                     }).catch(console.error)
                 })
                 .then(success=>{
-                    message.react("📨").catch(console.error)
                     message.react("✅").catch(console.error)
                 });
             }
@@ -624,7 +623,7 @@ module.exports = client => {
             let dmauthor = interaction.user;
             if(!client.modmailDb.has(dmauthor.id))
                 return interaction.reply({
-                    content: "❌ **You are not having a Ticket anymore!**",
+                    content: "❌ Je hebt geen ticket openstaan.",
                     ephemeral: true
                 })
             let guild = client.guilds.cache.get(client.modmailDb.get(dmauthor.id, "id"));
@@ -636,7 +635,8 @@ module.exports = client => {
                             .setTimestamp()
                             .setFooter(`ID: ${dmauthor.id}`, dmauthor.displayAvatarURL({dynamic: true}))
                             .setColor("RED")
-                            .setTitle("❌ Unable to find the Support GUILD, try again!")
+                            .setTitle("❌ Geen server gevonden")
+                            .setDescription("Ik heb geen server kunnen vinden, probeer het later opnieuw.")
                         ],
                         ephemeral: true
                 }).catch(console.error)
@@ -650,18 +650,19 @@ module.exports = client => {
                             .setTimestamp()
                             .setFooter(`ID: ${dmauthor.id}`, dmauthor.displayAvatarURL({dynamic: true}))
                             .setColor("RED")
-                            .setTitle("❌ Unable to find the Support Channel, try again!")
+                            .setTitle("❌ Geen kanaal gevonden")
+                            .setDescription("Ik heb geen kanaal kunnen vinden, probeer het later opnieuw.")
                         ],
                         components: [
                             new Discord.MessageActionRow().addComponents(
-                                new Discord.MessageButton().setStyle("SECONDARY").setLabel("FORCE CLOSE IT").setCustomId("force_modmail_close").setEmoji("❎")
+                                new Discord.MessageButton().setStyle("SECONDARY").setLabel("Force Close").setCustomId("force_modmail_close").setEmoji("❎")
                             )
                         ],
                         ephemeral: true
                 }).catch(console.error)
             }
             interaction.reply({
-                content: "**Closed the Ticket!**",
+                content: "Kanaal succesvol gesloten.",
                 ephemeral: true
             })
             client.modmailDb.delete(dmauthor.id);
