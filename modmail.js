@@ -586,7 +586,7 @@ module.exports = client => {
                     .setTimestamp()
                     .setFooter(`ID: ${dmauthor.id}`, dmauthor.displayAvatarURL({dynamic: true}))
                     .setColor("GREEN")
-                    .setTitle("📨 Sent a new Message")
+                    .setTitle("Nieuw Bericht")
                     .setDescription(`${message.content}`.substr(0, 2048))
                 if(attachment.length > 0){
                     console.log(attachment)
@@ -704,7 +704,8 @@ module.exports = client => {
                         .setTimestamp()
                         .setFooter(`ID: ${dmauthor.id}`, dmauthor.displayAvatarURL({dynamic: true}))
                         .setColor("GREEN")
-                        .setTitle("✅ TicketUser Closed the Ticket")
+                        .setTitle("✅ Ticket Gesloten")
+                        .setDescription("Je hebt deze ticket succesvol gesloten.")
                     ]
             }).catch(console.error)
             await channel.send({
@@ -715,8 +716,8 @@ module.exports = client => {
                         .setTimestamp()
                         .setFooter(`ID: ${dmauthor.id}`, dmauthor.displayAvatarURL({dynamic: true}))
                         .setColor("GREEN")
-                        .setTitle("✅ TicketUser Closed the Ticket")
-                        .setDescription(`U CAN NOW DELETE IT IF YOU WANT!`)
+                        .setTitle("✅ Ticket Gesloten")
+                        .setDescription("Gebruiker heeft deze ticket gesloten.\nJe kan het verwijderen.")
                     ]
             }).catch(console.error)
             try{ fs.unlinkSync(`${process.cwd()}/${channel.name}.html`)}catch(e){ console.log(e) }
@@ -724,7 +725,7 @@ module.exports = client => {
         if(interaction.isButton() && interaction.customId == "force_modmail_close" && !interaction.guildId){
             if(client.modmailDb.has(interaction.user.id)) client.modmailDb.delete(interaction.user.id);
             interaction.reply({
-                content: "**Force Closed the Ticket you can now create new ones!**",
+                content: "Ticket is succesvol gesloten.",
                 ephemeral: true
             })
         }
@@ -739,8 +740,8 @@ module.exports = client => {
                             .setTimestamp()
                             .setFooter(`ID: ${serverauthor.id}`, serverauthor.displayAvatarURL({dynamic: true}))
                             .setColor("RED")
-                            .setTitle("❌ This Channel is Closed / the user left!")
-                            .setDescription(`Close the Ticket with: \`${config.prefix}forceclose\`\nAfter that, you can delete the Channel!`)
+                            .setTitle("❌ Geen Gebruiker Gevonden")
+                            .setDescription(`Er is geen gebruiker gevonden die verbonden staat met dit kanaal. Sluit de ticket doormiddel van \`${config.prefix}forceclose\`\nDaarna kan je het kanaal verwijderen.`)
                         ]
                 }).catch(console.error);
             let author = interaction.message.guild.members.cache.get(authorId);
@@ -754,8 +755,8 @@ module.exports = client => {
                             .setTimestamp()
                             .setFooter(`ID: ${serverauthor.id}`, serverauthor.displayAvatarURL({dynamic: true}))
                             .setColor("RED")
-                            .setTitle("❌ The User left the Server")
-                            .setDescription(`Close the Ticket with: \`${config.prefix}close\``)
+                            .setTitle("❌ Geen Gebruiker Gevonden")
+                            .setDescription(`Gebruiker heeft de server verlaten. Sluit de ticket doormiddel van \`${config.prefix}close\``)
                         ]
                 }).catch(console.error)
             })
@@ -767,8 +768,8 @@ module.exports = client => {
                             .setTimestamp()
                             .setFooter(`ID: ${serverauthor.id}`, serverauthor.displayAvatarURL({dynamic: true}))
                             .setColor("RED")
-                            .setTitle("❌ The User left the Server")
-                            .setDescription(`Close the Ticket with: \`${config.prefix}forceclose\``)
+                            .setTitle("❌ Geen Gebruiker Gevonden")
+                            .setDescription(`Gebruiker heeft de server verlaten. Sluit de ticket doormiddel van \`${config.prefix}close\``)
                         ]
                 }).catch(console.error)
             }
@@ -816,7 +817,8 @@ module.exports = client => {
                         .setTimestamp()
                         .setFooter(`ID: ${serverauthor.id}`, serverauthor.displayAvatarURL({dynamic: true}))
                         .setColor("GREEN")
-                        .setTitle("✅ Supporter Closed the Ticket")
+                        .setTitle("✅ Ticket Gesloten")
+                        .setDescription("Een medewerker heeft deze ticket gesloten.")
                     ]
             }).catch(console.error)
             await interaction.user.send({
@@ -827,7 +829,8 @@ module.exports = client => {
                         .setTimestamp()
                         .setFooter(`ID: ${serverauthor.id}`, serverauthor.displayAvatarURL({dynamic: true}))
                         .setColor("GREEN")
-                        .setTitle("✅ Supporter Closed the Ticket")
+                        .setTitle("✅ Ticket Gesloten")
+                        .setDescription("Een medewerker heeft deze ticket gesloten.")
                     ]
             }).catch(console.error)
             await interaction.message.reply({
@@ -870,8 +873,8 @@ module.exports = client => {
                         .setTimestamp()
                         .setFooter(`ID: ${dmauthor.id}`, dmauthor.displayAvatarURL({dynamic: true}))
                         .setColor("RED")
-                        .setTitle("❌ This Guild is not setupped yet!")
-                        .setDescription(`an admin can do it with \`${config.prefix}setup\``)
+                        .setTitle("❌ Server niet ingesteld")
+                        .setDescription(`Modmail is niet ingesteld in deze server.`)
                 ]
             }).catch(console.error)
         }
@@ -883,7 +886,7 @@ module.exports = client => {
         }
         guild.channels.create(`${dmauthor.username}`.substr(0, 32) , {
             type: "GUILD_TEXT",
-            topic: `Modmail Ticket for: ${dmauthor.tag} | ${dmauthor.id}`,
+            topic: `Modmail Ticket voor: ${dmauthor.tag} | ${dmauthor.id}`,
             permissionOverwrites: [
                 {
                     id: guild.id,
@@ -902,12 +905,11 @@ module.exports = client => {
                     .setTimestamp()
                     .setFooter(`ID: ${dmauthor.id}`, dmauthor.displayAvatarURL({dynamic: true}))
                     .setColor("BLURPLE")
-                    .setTitle("✅ Succesfully Created your Support Ticket!")
+                    .setTitle("✅ Ticket Succesvol Geopend")
                     .setDescription(`${data.message}`)
-                    .addField("Visibility", `${!category ? "Only Admins can see it!" : "Using the Settings of it's Category"}`)
                    ],
                    components: [ new Discord.MessageActionRow().addComponents(new Discord.MessageButton()
-                    .setStyle("DANGER").setEmoji("💥").setLabel("Close this Ticket").setCustomId("close_modmail_ticket"))]
+                    .setStyle("DANGER").setEmoji("💥").setLabel("Close").setCustomId("close_modmail_ticket"))]
             }).catch(console.error)
             channel.send({
                 embeds: [
@@ -916,11 +918,10 @@ module.exports = client => {
                     .setTimestamp()
                     .setFooter(`ID: ${dmauthor.id}`, dmauthor.displayAvatarURL({dynamic: true}))
                     .setColor("GREEN")
-                    .setTitle("✅ Created an Support Ticket!")
-                    .addField("Visibility", `${!category ? "Only Admins can see it!" : "Using the Settings of it's Category"}`)
+                    .setTitle("✅ Ticket Aangemaakt")
                    ],
                    components: [ new Discord.MessageActionRow().addComponents(new Discord.MessageButton()
-                    .setStyle("DANGER").setEmoji("💥").setLabel("Close this Ticket").setCustomId("close_modmail_ticket"))]
+                    .setStyle("DANGER").setEmoji("💥").setLabel("Close").setCustomId("close_modmail_ticket"))]
             }).catch(console.error)
             //START THE SUPPORTING HELP!
         }).catch(error=>{
@@ -933,7 +934,7 @@ module.exports = client => {
                     .setTimestamp()
                     .setFooter(`ID: ${dmauthor.id}`, dmauthor.displayAvatarURL({dynamic: true}))
                     .setColor("RED")
-                    .setTitle("❌ Failed to create the Support Ticket! | CANCELLED")
+                    .setTitle("❌ Geen kanaal aan kunnen maken")
                     .setDescription(`\`\`\`${error.message ? String(error.message).substr(0, 2000) : String(e).substr(0, 2000)}\`\`\``)
                    ]
             }).catch(console.error)
